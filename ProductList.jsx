@@ -1,27 +1,30 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addItem } from './CartSlice';
 
-const ProductList = () => {
+function ProductList() {
+  const dispatch = useDispatch();
   const plants = [
-    { name: 'Snake Plant', price: '$15', image: 'https://images.unsplash.com/photo-1596547609652-9cf5d8d76921' },
-    { name: 'Spider Plant', price: '$12', image: 'https://images.unsplash.com/photo-1512428559087-560fa5ceab42' },
-    { name: 'Peace Lily', price: '$18', image: 'https://images.unsplash.com/photo-1593642632823-8f785ba67e45' }
+    { name: 'Snake Plant', cost: 15, image: 'snake.jpg', description: 'Purifies the air.' },
+    { name: 'Monstera', cost: 25, image: 'monstera.jpg', description: 'Beautiful split leaves.' }
   ];
 
   return (
-    <div className="product-list">
-      <h2>Our Beautiful Plants</h2>
-      <div className="products-grid">
-        {plants.map((plant, index) => (
-          <div key={index} className="product-card">
-            <img src={plant.image} alt={plant.name} style={{ width: '150px' }} />
+    <div className="product-listing">
+      <h2>Our Plants</h2>
+      <div className="plant-grid">
+        {plants.map(plant => (
+          <div key={plant.name} className="plant-card">
+            <img src={plant.image} alt={plant.name} />
             <h3>{plant.name}</h3>
-            <p>{plant.price}</p>
-            <button>Add to Cart</button>
+            <p>${plant.cost}</p>
+            <p>{plant.description}</p>
+            <button onClick={() => dispatch(addItem(plant))}>Add to Cart</button>
           </div>
         ))}
       </div>
     </div>
   );
-};
+}
 
 export default ProductList;
